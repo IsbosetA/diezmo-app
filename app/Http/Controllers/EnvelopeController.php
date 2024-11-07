@@ -56,8 +56,14 @@ class EnvelopeController extends Controller
 
     public function create()
     {
-        $members = Member::all();
+        $members = null;  // Inicializa $members en null por defecto
+
+        if (Auth::user()->hasRole('admin')) {
+            $members = Member::all();  // Si es admin, asigna los miembros
+        }
+
         $offeringsTypes = OfferingType::all();
+
         return view('envelopes.create', compact('members', 'offeringsTypes'));
     }
 

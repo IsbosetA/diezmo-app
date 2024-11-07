@@ -24,12 +24,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('mail', function(){
-    $username = "PepeGrillox";
-    $temporalPassword = "Pinocho3000";
-    return view('emails.welcomeMail', compact('username', 'temporalPassword'));
-});
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

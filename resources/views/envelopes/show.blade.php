@@ -191,20 +191,32 @@
                         </div>
                     </div>
                     <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="group relative z-0 mb-5 w-full">
-                            <label for="member" class="sr-only">Underline select</label>
-                            <select id="member" name="member"
-                                class="peer block w-full !appearance-none !border-0 !border-b-2 !border-gray-300 !bg-transparent !px-0 py-2.5 !text-sm  text-gray-900 focus:!border-blue-600 focus:!outline-none focus:!ring-0"
-                                placeholder=" " required>
-                                <option selected class="text-gray-500 font-bold">Selecciona un Miembro</option>
-                                @foreach ($members as $member)
-                                    <option value="{{ $member->id }}" class="text-gray-500"
-                                        {{ $member->id == $envelope->member->id ? 'selected' : '' }}>
-                                        {{ $member->firstname }}
-                                        {{ $member->lastname }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if (Auth::user()->hasRole('admin'))
+                            <div class="group relative z-0 mb-5 w-full">
+                                <label for="member" class="sr-only">Underline select</label>
+                                <select id="member" name="member"
+                                    class="peer block w-full !appearance-none !border-0 !border-b-2 !border-gray-300 !bg-transparent !px-0 py-2.5 !text-sm  text-gray-900 focus:!border-blue-600 focus:!outline-none focus:!ring-0"
+                                    placeholder=" " required>
+                                    <option selected class="text-gray-500 font-bold">Selecciona un Miembro</option>
+                                    @foreach ($members as $member)
+                                        <option value="{{ $member->id }}" class="text-gray-500"
+                                            {{ $member->id == $envelope->member->id ? 'selected' : '' }}>
+                                            {{ $member->firstname }}
+                                            {{ $member->lastname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+                        @if (Auth::user()->hasRole('member'))
+                            <input type="hidden" name="member" value="{{ Auth::user()->member->id }}">
+                            <div class="relative z-0 w-full mb-5 group">
+                                <input type="text" name="member_fullname" id="member_fullname" value="{{ Auth::user()->member->firstname.' '.Auth::user()->member->lastname }}" disabled
+                                    class="block py-2.5 px-0 w-full !text-sm text-gray-900 !bg-transparent !border-0 !border-b-2 !border-gray-300 !appearance-none focus:!outline-none focus:!ring-0 focus:!border-blue-600 peer  cursor-not-allowed"
+                                    placeholder=" " required />
+                                <label for="member_fullname"
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Descripcion</label>
+                            </div>
+                        @endif
                         <div class="relative z-0 w-full mb-5 group">
                             <input type="number" name="tithe" id="tithe" value="{{ $envelope->tithe->amount }}"
                                 class="block py-2.5 px-0 w-full !text-sm text-gray-900 !bg-transparent !border-0 !border-b-2 !border-gray-300 !appearance-none focus:!outline-none focus:!ring-0 focus:!border-blue-600 peer"

@@ -55,7 +55,7 @@ class MemberController extends Controller
                 'email' => 'required|unique:members|email'
             ]);
 
-            //DB::beginTransaction();
+            DB::beginTransaction();
 
             $member = Member::create([
                 'firstname' => $validated['firstname'],
@@ -75,11 +75,10 @@ class MemberController extends Controller
 
             $user->assignRole('member');
 
-            //Mail::to($member->email)->send(new WelcomeMail($user->username, $password));
+            Mail::to($member->email)->send(new WelcomeMail($user->username, $password));
 
-            dd($user->username, $password);
             // Confirmar la transacción
-            //DB::commit();
+            DB::commit();
             return redirect()->route('members')->with('success', 'Miembro Creado Correctamente');
         } catch (\Exception $e) {
 
