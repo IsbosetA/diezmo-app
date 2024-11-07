@@ -80,5 +80,6 @@ Route::middleware([
 
         //Perfil del Usuario
         Route::get('profile', [SettingsController::class, 'profile'])->name('profile');
+        Route::post('profile/update/password', [SettingsController::class, 'updatePassword'])->name('profile.update.password');
     });
 });
