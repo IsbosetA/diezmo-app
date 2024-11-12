@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('envelopes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('id_member');
+            $table->unsignedInteger('id_member');
             $table->string('envelope_number');
             $table->date('date');
             $table->string('description')->nullable();

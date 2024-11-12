@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
 //Controllers
@@ -77,3 +78,11 @@ Route::middleware([
         Route::post('profile/update/password', [SettingsController::class, 'updatePassword'])->name('profile.update.password');
     });
 });
+
+Route::post('sendResetPasswordLink', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('reset.password');
+
+// Ruta para mostrar el formulario de restablecimiento
+Route::get('/password/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+
+// Ruta para manejar el restablecimiento de la contraseña
+Route::post('/password/reset', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
