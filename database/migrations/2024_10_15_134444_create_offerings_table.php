@@ -20,7 +20,7 @@ return new class extends Migration
 
             //Foreings
             $table->foreign('id_envelope')->references('id')->on('envelopes')->onDelete('cascade');
-            $table->foreign('id_offering_type')->references('id')->on('offering_types');
+            $table->foreign('id_offering_type')->references('id')->on('offering_types')->onDelete('cascade');
         });
     }
 
